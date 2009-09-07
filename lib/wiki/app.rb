@@ -20,14 +20,17 @@ module Wiki
 
       I18n.load_locale(File.join(File.dirname(__FILE__), 'locale.yml'))
 
-      if File.exists?(Config.git.repository) && File.exists?(Config.git.workspace)
+      if File.exists?(Config.git.wikitop) && File.exists?(Config.git.workspace)
         @logger.info 'Opening repository'
-        @repo = Git.open(Config.git.workspace, :repository => Config.git.repository,
-                         :index => File.join(Config.git.repository, 'index'), :log => @logger)
+        @repo = Git.open(Config.git.repository, :log => @logger)
+        #@repo = Git.open(Config.git.workspace, :repository => Config.git.repository,
+        #               :index => File.join(Config.git.repository, 'index'), :log => @logger)
+        #               :index => File.join(Config.git.wikitop, 'index'), :log => @logger)
       else
         @logger.info 'Initializing repository'
         @repo = Git.init(Config.git.workspace, :repository => Config.git.repository,
                          :index => File.join(Config.git.repository, 'index'), :log => @logger)
+        Dir.mkdir(Config.git.wikitop)
         page = Page.new(@repo, Config.main_page)
         page.write(:main_page_text.t, :initialize_repository.t)
         @logger.info 'Repository initialized'
@@ -113,7 +116,7 @@ module Wiki
     post '/login' do
       begin
         session[:user] = @user = User.authenticate(params[:user], params[:password])
-	redirect session.delete(:goto) || '/'
+        redirect session.delete(:goto) || '/'
       rescue StandardError => error
         message :error, error
         haml :login
@@ -334,8 +337,8 @@ module Wiki
     # Boilerplate for new pages
     def boilerplate
       if @resource.path =~ /^\w+\.sass$/
-	name = File.join(Config.root, 'views', 'style', @resource.path)
-	params[:content] = File.read(name) if File.file?(name)
+        name = File.join(Config.root, 'views', 'style', @resource.path)
+        params[:content] = File.read(name) if File.file?(name)
       end
     end
 

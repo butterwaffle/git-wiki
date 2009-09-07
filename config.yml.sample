@@ -1,4 +1,4 @@
-title:        'Git-Wiki'
+title:        'Git-Wiki' # This changes the title displayed at the top of every page.
 auth:
   service: yamlfile
   store:   '/home/user/wiki/users.yml'
@@ -18,5 +18,11 @@ log:
   level:     INFO
   file:      '/home/user/wiki/log'
 git:
-  repository:   '/home/user/wiki/repository'
-  workspace:    '/home/user/wiki/workspace'
+# The repository is a path to a Git repository.
+# The wikitop is the path to the wiki inside the repository.
+# This allows you to maintain a wiki inside the project it documents.
+# The workspace is a place where the web server cache and
+# (in the case of bare repositories) modified pages are located.
+  repository:   '/home/user/repository'
+  wikitop:      '/home/user/repository/wiki'
+  workspace:    '/home/user/workspace'
