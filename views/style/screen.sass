@@ -13,7 +13,8 @@
   :float left
 
 =headline(!size)
-  :font-family Georgia, serif
+  :font-family "Bitstream Vera Sans", Verdana, Arial, Helvetica, sans-serif
+  :font-weight bold
   :color #0b3e71
   :margin 1em 0 0.5em 0
   :border-bottom 1px solid #999
@@ -22,7 +23,7 @@
 body
   :color #000
   :background #FFF
-  :font-family Verdana, Arial, Helvetica, sans-serif
+  :font-family Baskerville, serif
   :font-size 10pt
 
 h1
@@ -143,12 +144,15 @@ a
   &, &:visited
     :color #0B3E71
     :text-decoration none
+    :font-weight bold
   &:hover, &:active, &:focus
     :color #FFF
     :background #0B3E71
     :text-decoration none
+    :font-weight bold
   &:active
     :background #022763
+    :font-weight bold
   &.img
     :background transparent
   div.img &
@@ -188,7 +192,7 @@ hr
   h1
     +reset-box-model
     :border none
-    :color #FFFFC2
+    :color #FFFFFF
     :font-family Georgia, serif
     :font-size 200%
     :font-variant small-caps
@@ -197,7 +201,7 @@ hr
   #info
     :float right
     :border 1px solid #999
-    :background #FFFFC2
+    :background #FFFFFF
     :padding 0.2em
     :margin 0.3em
   #search
@@ -290,7 +294,7 @@ hr
         :display block
 
 #container
-  :background #FFFFCD url(static/images/container_bg.png) repeat-y top left
+  :background #FFFFFF url(static/images/container_bg.png) repeat-y top left
   #body
     :display block
     :overflow hidden
@@ -333,7 +337,6 @@ hr
 
   #footer
     :color #555
-    :background url(static/images/footer_bg.png) repeat-x top left
     :padding 2em 3em 0 3em
     :text-align right
     :line-height 2em
