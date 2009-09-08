@@ -64,25 +64,25 @@ Configuration
 
 Several [YAML][] configuration files exist for you to customize the wiki:
 
-- config.yml (or, if you run from within a git repository, .wiki.config.yml at the top of the repository)
+- `config.yml` (or, if you run from within a git repository, `.wiki.config.yml` at the top of the repository)
   contains paths and settings for the server.
-- interwiki.yml contains a list of namespaces for referring to entries in remote wikis.
-- users.yml (as defined in config.yml) contains authentication information for clients attempting to access the wiki.
+- `interwiki.yml` contains a list of namespaces for referring to entries in remote wikis.
+- `users.yml` (as defined in `config.yml`) contains authentication information for clients attempting to access the wiki.
 
-In this fork, the following settings in config.yml may contain the string @REPOSITORY_PATH@:
+In this fork, the following settings in `config.yml` may contain the string `@REPOSITORY_PATH@`:
 
-- auth.store : the location of authentication information
-- cache : where files cached by the web server for improved performance should be stored (e.g., PNG images of equations)
-- log.file : the web server log file
-- git.repository : the top directory of the git repository containing the wiki.
-  This should either be exactly @REPOSITORY_PATH@ or an absolute path, but never a path relative to @REPOSITORY_PATH@.
-- git.wikitop : where the home page of the wiki should reside in the repository named in git.repository.
-  This should always be a subdirectory of git.repository.
-- git.workspace : where temporary files for the wiki should be stored until they are committed.
+- `auth.store` : the location of authentication information
+- `cache` : where files cached by the web server for improved performance should be stored (e.g., PNG images of equations)
+- `log.file` : the web server log file
+- `git.repository` : the top directory of the git repository containing the wiki.
+  This should either be exactly `@REPOSITORY_PATH@` or an absolute path, but never a path relative to `@REPOSITORY_PATH@`.
+- `git.wikitop` : where the home page of the wiki should reside in the repository named in `git.repository`.
+  This should always be a subdirectory of `git.repository`.
+- `git.workspace` : where temporary files for the wiki should be stored until they are committed.
 
-If they do, @REPOSITORY_PATH@ will be replaced with the expanded path to the top of the git repository.
+If they do, `@REPOSITORY_PATH@` will be replaced with the expanded path to the top of the git repository.
 This is useful if you wish to make Git-Wiki a submodule of your git repository.
-The git.wikitop setting is useful if you wish to make the wiki a subdirectory of the repository it documents.
+The `git.wikitop` setting is useful if you wish to make the wiki a subdirectory of the repository it documents.
 
 ### Notes:
 
