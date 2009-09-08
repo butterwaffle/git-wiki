@@ -19,10 +19,29 @@ require 'rack/ban_ip'
 require 'rack/anti_spam'
 require 'wiki/app'
 
+repo_path = nil
 config_file = if ENV['WIKI_CONFIG']
   ENV['WIKI_CONFIG']
 else
-  ::File.join(path, 'config.yml')
+  if ::File::exist?( ::File.join( path, 'config.yml' ) )
+    ::File.join(path, 'config.yml')
+  else
+    epath = ::File.expand_path( Dir.pwd )
+    repo = nil
+    until repo or epath == '/'
+      begin
+        repo = Git.open( epath )
+      rescue
+        epath = ::File.expand_path( ::File.join( epath, '..' ) )
+      end
+    end
+    if repo
+      if ::File::exist?( ::File.join( repo.dir.path, '.wiki.config.yml' ) )
+        repo_path = repo.dir.path
+        ::File.join( repo.dir.path, '.wiki.config.yml' )
+      end
+    end
+  end
 end
 
 default_config = {
@@ -59,6 +78,14 @@ default_config = {
 
 Wiki::Config.update(default_config)
 Wiki::Config.load(config_file)
+if repo_path
+  Wiki::Config.auth.store = Wiki::Config.auth.store.gsub( "@REPOSITORY_PATH@", repo_path )
+  Wiki::Config.cache = Wiki::Config.cache.gsub( "@REPOSITORY_PATH@", repo_path )
+  Wiki::Config.log.file = Wiki::Config.log.file.gsub( "@REPOSITORY_PATH@", repo_path )
+  Wiki::Config.git.repository = Wiki::Config.git.repository.gsub( "@REPOSITORY_PATH@", repo_path )
+  Wiki::Config.git.wikitop = Wiki::Config.git.wikitop.gsub( "@REPOSITORY_PATH@", repo_path )
+  Wiki::Config.git.workspace = Wiki::Config.git.workspace.gsub( "@REPOSITORY_PATH@", repo_path )
+end
 
 if Wiki::Config.rack.profiling?
   require 'rack/contrib'
